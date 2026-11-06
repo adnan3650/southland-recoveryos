@@ -1,0 +1,246 @@
+[
+  {
+    "id": "emergency",
+    "name": "Emergency services",
+    "category": "safety",
+    "description": "Call 911 for an immediate danger to life. This app does not dispatch emergency services.",
+    "geographic_coverage": [
+      "United States"
+    ],
+    "eligibility": [
+      "Immediate emergency"
+    ],
+    "contact": "911",
+    "source_url": "https://www.911.gov/calling-911/",
+    "verified_at": "2026-11-06",
+    "verification": "Official page reviewed; emergency contact guidance verified",
+    "availability": "Contact provider to confirm",
+    "limitations": "Confirm requirements, hours and availability directly. No live availability feed.",
+    "needs": [],
+    "program": false
+  },
+  {
+    "id": "flood-safety",
+    "name": "Official flood safety guidance",
+    "category": "safety",
+    "description": "Follow official flood safety instructions and local emergency responders. Stay away from flooded or damaged areas.",
+    "geographic_coverage": [
+      "United States"
+    ],
+    "eligibility": [
+      "Anyone affected by flooding"
+    ],
+    "contact": "Use official guidance",
+    "source_url": "https://www.ready.gov/floods",
+    "verified_at": null,
+    "verification": "Official link; page retrieval blocked (403), content not verified",
+    "availability": "Contact provider to confirm",
+    "limitations": "Reference only. Fetch blocked; no active alerts or site safety assessment.",
+    "needs": [],
+    "program": false
+  },
+  {
+    "id": "211",
+    "name": "211 Metro Chicago",
+    "category": "essentials",
+    "description": "Free referrals for non-emergency health and social services in Chicago and suburban Cook County.",
+    "geographic_coverage": [
+      "Cook County"
+    ],
+    "eligibility": [
+      "Chicago or suburban Cook County residents"
+    ],
+    "contact": "Dial 211; text ZIP to 898211",
+    "source_url": "https://211metrochicago.org/",
+    "verified_at": "2026-11-06",
+    "verification": "Official page reviewed; service capacity not verified",
+    "availability": "Contact provider to confirm",
+    "limitations": "Confirm requirements, hours and availability directly. No live availability feed.",
+    "needs": [
+      "shelter",
+      "food",
+      "clothing",
+      "transportation",
+      "cleanup"
+    ],
+    "program": false
+  },
+  {
+    "id": "red-cross",
+    "name": "American Red Cross shelter finder",
+    "category": "shelter",
+    "description": "Use the official shelter finder to look for disaster shelter information and check directly before travel.",
+    "geographic_coverage": [
+      "United States"
+    ],
+    "eligibility": [
+      "Disaster-affected residents; confirm service details"
+    ],
+    "contact": "Official shelter finder",
+    "source_url": "https://www.redcross.org/get-help/disaster-relief-and-recovery-services/find-an-open-shelter.html",
+    "verified_at": "2026-11-06",
+    "verification": "Official page reviewed; service capacity not verified",
+    "availability": "Contact provider to confirm",
+    "limitations": "Directory link only; no open shelter or bed availability is asserted.",
+    "needs": [
+      "shelter"
+    ],
+    "program": false
+  },
+  {
+    "id": "food-bank",
+    "name": "Greater Chicago Food Depository",
+    "category": "food",
+    "description": "Search the official map by ZIP code for food pantries and meal sites in Chicago and Cook County.",
+    "geographic_coverage": [
+      "Cook County"
+    ],
+    "eligibility": [
+      "Site-specific hours and requirements vary"
+    ],
+    "contact": "Search by ZIP on the official site",
+    "source_url": "https://www.chicagosfoodbank.org/find-food-2/",
+    "verified_at": "2026-11-06",
+    "verification": "Official page reviewed; service capacity not verified",
+    "availability": "Contact provider to confirm",
+    "limitations": "Confirm requirements, hours and availability directly. No live availability feed.",
+    "needs": [
+      "food"
+    ],
+    "program": false
+  },
+  {
+    "id": "county-floods",
+    "name": "Cook County flood recovery guidance",
+    "category": "recovery",
+    "description": "Official guidance recommends documenting damage, contacting insurance and retaining flood-related receipts.",
+    "geographic_coverage": [
+      "Cook County"
+    ],
+    "eligibility": [
+      "Residents affected by flooding"
+    ],
+    "contact": "Use official county guidance",
+    "source_url": "https://www.cookcountyil.gov/floods",
+    "verified_at": "2026-11-06",
+    "verification": "Official page reviewed; service capacity not verified",
+    "availability": "Contact provider to confirm",
+    "limitations": "Evergreen documentation guidance only. Event-specific availability statements on the page are not applied to this incident.",
+    "needs": [
+      "cleanup"
+    ],
+    "program": false
+  },
+  {
+    "id": "illinois-marc",
+    "name": "Illinois multi-agency recovery resources",
+    "category": "essentials",
+    "description": "State directory brings disaster-related relief agencies and recovery information together.",
+    "geographic_coverage": [
+      "Illinois"
+    ],
+    "eligibility": [
+      "Agency-specific eligibility; confirm incident applicability"
+    ],
+    "contact": "Official agency directory",
+    "source_url": "https://ready.illinois.gov/after/marc.html",
+    "verified_at": "2026-11-06",
+    "verification": "Official page reviewed; service capacity not verified",
+    "availability": "Contact provider to confirm",
+    "limitations": "Confirm requirements, hours and availability directly. No live availability feed.",
+    "needs": [
+      "shelter",
+      "food",
+      "cleanup"
+    ],
+    "program": false
+  },
+  {
+    "id": "south-holland-public-works",
+    "name": "South Holland Public Works",
+    "category": "municipal",
+    "description": "Report problems with village infrastructure including flooding, sewer backups and water issues.",
+    "geographic_coverage": [
+      "South Holland"
+    ],
+    "eligibility": [
+      "Village infrastructure concerns"
+    ],
+    "contact": "Confirm contact on official municipal website",
+    "source_url": "https://www.southholland.org/departments/public-works",
+    "verified_at": null,
+    "verification": "Refresh attempt on 2026-11-06 timed out; municipal contact content not reverified",
+    "availability": "Contact provider to confirm",
+    "limitations": "Official municipal reference only. Page refresh timed out; contact and current service availability must be confirmed.",
+    "needs": [
+      "cleanup"
+    ],
+    "program": false
+  },
+  {
+    "id": "south-holland-flood",
+    "name": "South Holland flood-prevention rebate",
+    "category": "program",
+    "description": "Village guidance describes pre-qualified floodproofing rebates and a sewer-backup prevention cost-sharing option.",
+    "geographic_coverage": [
+      "South Holland"
+    ],
+    "eligibility": [
+      "Qualifying flood-prevention project",
+      "Village pre-approval",
+      "Owner occupancy; confirm current requirements",
+      "Two bids per published floodplain plan"
+    ],
+    "contact": "Community Development: 708-210-2915",
+    "source_url": "https://www.southholland.org/news/flood-prevention-and-protection",
+    "verified_at": "2026-11-06",
+    "verification": "News page and official 2017 Floodplain Management Plan page 7-22 reviewed on 2026-11-06; current funding and terms require Village confirmation",
+    "availability": "Contact provider to confirm",
+    "limitations": "Mitigation program, not automatic damage compensation. Current funding, terms and approval must be confirmed. Requirements also reference the 2017 official floodplain plan. Historical prerequisite source: https://southholland.org/wp-content/uploads/2025/06/SouthHollandFMP2017Final.pdf (page 7-22).",
+    "needs": [],
+    "program": true
+  },
+  {
+    "id": "fema",
+    "name": "FEMA Individual Assistance",
+    "category": "program",
+    "description": "Potential household assistance requires an applicable federal disaster declaration and agency review. No declaration is verified for this case.",
+    "geographic_coverage": [
+      "United States"
+    ],
+    "eligibility": [
+      "Covered location and incident dates",
+      "Open application period",
+      "Identity, occupancy and other agency requirements"
+    ],
+    "contact": "Check official FEMA information",
+    "source_url": "https://www.fema.gov/assistance/individual",
+    "verified_at": null,
+    "verification": "Official link; page retrieval blocked (403), content not verified",
+    "availability": "Contact provider to confirm",
+    "limitations": "FEMA page retrieval blocked (403); high-level declaration prerequisite cross-checked against official county/state guidance. No current deadline or availability asserted.",
+    "needs": [],
+    "program": true
+  },
+  {
+    "id": "county-recovery",
+    "name": "Cook County disaster recovery and resilience",
+    "category": "program",
+    "description": "County recovery planning and CDBG-DR information for specified prior disasters. Confirm whether any published program covers your event.",
+    "geographic_coverage": [
+      "Cook County"
+    ],
+    "eligibility": [
+      "Covered incident and geography",
+      "Published program requirements and application period"
+    ],
+    "contact": "County information: 312-603-1000",
+    "source_url": "https://www.cookcountyil.gov/service/disaster-recovery-and-resilience",
+    "verified_at": "2026-11-06",
+    "verification": "Official page reviewed; service capacity not verified",
+    "availability": "Contact provider to confirm",
+    "limitations": "Published page includes timeline information later than the build date. Use as a planning reference only; current intake and funding unverified.",
+    "needs": [],
+    "program": true
+  }
+]

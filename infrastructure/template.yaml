@@ -1,0 +1,152 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: RecoveryOS staging candidate - DO NOT DEPLOY before documented acceptance gates and cost approval
+Parameters:
+  FrontendOrigin:
+    Type: String
+    AllowedPattern: 'https://.+'
+  CognitoIssuer:
+    Type: String
+    AllowedPattern: 'https://cognito-idp\..+\.amazonaws.com/.+'
+  CognitoClientId:
+    Type: String
+  AnthropicSecretArn:
+    Type: String
+    NoEcho: true
+  BudgetEmail:
+    Type: String
+Resources:
+  Cases:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: owner
+          AttributeType: S
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: owner
+          KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
+      SSESpecification:
+        SSEEnabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+  Documents:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+  DocumentsPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref Documents
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Deny
+            Principal: '*'
+            Action: s3:*
+            Resource:
+              - !GetAtt Documents.Arn
+              - !Sub '${Documents.Arn}/*'
+            Condition:
+              Bool:
+                aws:SecureTransport: false
+  Api:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: staging
+      CorsConfiguration:
+        AllowOrigins: [!Ref FrontendOrigin]
+        AllowHeaders: [Authorization, Content-Type]
+        AllowMethods: [GET, POST, PUT, PATCH, OPTIONS]
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 10
+        ThrottlingRateLimit: 5
+      Auth:
+        DefaultAuthorizer: ResidentJWT
+        Authorizers:
+          ResidentJWT:
+            JwtConfiguration:
+              issuer: !Ref CognitoIssuer
+              audience: [!Ref CognitoClientId]
+            IdentitySource: '$request.header.Authorization'
+  Backend:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.12
+      Architectures: [arm64]
+      Handler: backend.lambda_handler.handler
+      CodeUri: ../
+      MemorySize: 512
+      Timeout: 29
+      ReservedConcurrentExecutions: 2
+      Environment:
+        Variables:
+          APP_MODE: aws
+          CASES_TABLE: !Ref Cases
+          DOCUMENTS_BUCKET: !Ref Documents
+          FRONTEND_ORIGIN: !Ref FrontendOrigin
+          COGNITO_ISSUER: !Ref CognitoIssuer
+          COGNITO_CLIENT_ID: !Ref CognitoClientId
+          ANTHROPIC_API_KEY: !Sub '{{resolve:secretsmanager:${AnthropicSecretArn}:SecretString:ANTHROPIC_API_KEY}}'
+          ANTHROPIC_MODEL: claude-sonnet-5-5
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action: [dynamodb:GetItem, dynamodb:PutItem, dynamodb:Query]
+              Resource: !GetAtt Cases.Arn
+            - Effect: Allow
+              Action: [s3:GetObject, s3:PutObject]
+              Resource: !Sub '${Documents.Arn}/*'
+      Events:
+        ApiRoute:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+            Path: /{proxy+}
+            Method: ANY
+  Logs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${Backend}'
+      RetentionInDays: 14
+  Budget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: !Sub '${AWS::StackName}-monthly'
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit:
+          Amount: 10
+          Unit: USD
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 80
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - SubscriptionType: EMAIL
+              Address: !Ref BudgetEmail
+Outputs:
+  ApiUrl:
+    Value: !Sub 'https://${Api}.execute-api.${AWS::Region}.amazonaws.com/staging'
